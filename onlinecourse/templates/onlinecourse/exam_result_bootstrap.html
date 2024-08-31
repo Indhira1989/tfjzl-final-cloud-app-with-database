@@ -38,7 +38,7 @@
 <div class="container-fluid">
     {% if grade > 80 %}
     <div class="alert alert-success">
-        <strong>Congratulation, {{ user.username }} </strong> You passed the exam. Course completed with a score {{ grade }} / 100.
+        <b>Congratulations, {{ user.first_name }}!</b> You have passed the exam and completed the course with score {{ grade }}/100
     </div>
         {% else %}
         <div class="alert alert-danger">
@@ -51,20 +51,20 @@
             {% for question in course.question_set.all %}
             <div class="card mt-1">
                 <div class="card-header">
-                    <h5>{{ question.text }}</h5>
+                    <h5>{{ question.content }}</h5>
                 </div>
             
                 {% csrf_token %}
                 <div class="card-body">
                     {% for choice in question.choice_set.all %}
                         {% if choice in choices and choice.is_correct %}
-                            <p class="text-success">Correct answer: {{ choice.choice_text }}</p>
+                            <p class="text-success">Correct answer: {{ choice.content }}</p>
                         {% elif choice in choices and not choice.is_correct %}
-                            <p class="text-danger">Incorrect answer: {{ choice.choice_text }}</p>
+                            <p class="text-danger">Incorrect answer: {{ choice.content }}</p>
                         {% elif not choice in choices and choice.is_correct %}
-                            <p class="text-warning">Not selected: {{ choice.choice_text }}</p>
+                            <p class="text-warning">Not selected: {{ choice.content }}</p>
                         {% else %}
-                            <p class="text-dark">{{ choice.text }}</p>
+                            <p class="text-dark">{{ choice.content }}</p>
                         {% endif %}
                     {% endfor %}
                 </div>
